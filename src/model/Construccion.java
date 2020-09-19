@@ -1,200 +1,326 @@
-//package model;
-import java.util.Scanner;
+package model;
 
 public class Construccion{
 
 		private static final int Roughconstruction 	= 1300000;  //Obra negra
-		private static final int Whitework	= 26000000;  //Obra blanca
+		private static final int Whitework	= 2600000;  //Obra blanca
 		private static final int Paint 	= 980000;  //Pintura
-
-	static final String[] tiendas = new String[] {"HomeCenter", "Ferreteria del Barrio", "Ferreteria del centro"};
-	
-	static final String[] orderproduct = new String[70];  //Producto
-	static final int[] orderamount =  new int[70];  //Cantidad solicitada
-	static final int[] orderutilization = new int[70];
-	static final int[] orderstore = new int[70];  //Ferreteria a comprar
-	static final double[][] orderprice = new double[70][3];  //Precio
-
-	
-	static final double[] subtotals = new double[3];  //Subtotales
-	static final double[] ShippingValue = new double[3]; //Valor envio
-	
-
-	public static void addProduct(int index, String nameproduct, int amount, int utility, double price, double price2, double price3) {
-		orderproduct[index] 	= nameproduct; //Nombre del producto
-		orderamount[index] 		= amount; //Cantidad solicitada
-		orderutilization[index] = utility; //Utilizacion
-
-		orderprice[index][0] 		= price; //Utilizacion
-		orderprice[index][1] 		= price2; //Utilizacion
-		orderprice[index][2] 		= price3; //Utilizacion
+/**Price including labor for HomeCenter<br>
+	*<b> pre Should be different "" positive numbers and all must be initialized </b><br>
+	*<b> post returns what i would pay in HomeCenter </b><br>
+	*@param amount Should be an integer positive
+	*@param PriceHC Should be an integer positive
+	*@param numMaterials should be and integer positive
+	*@param location only u can write 0, 1 or 2
+	*/
+	public static int getTotalHomecenter(int[] amount,int[] PriceHC, int numMaterials,int location) {
+		int totalHomeCenter=0;
+		for(int i=0; i<numMaterials; i++){
+		totalHomeCenter += amount[i]*PriceHC[i];
+		}
+		if (location==0){
+			if (totalHomeCenter < 80000) {
+				totalHomeCenter = totalHomeCenter+120000;
+			}
+			else if (totalHomeCenter <300000){
+				totalHomeCenter =totalHomeCenter+28000;
+			}
+			else if (totalHomeCenter>300000){
+				totalHomeCenter = totalHomeCenter+0;
+			}	
+		}
+		else if (location==1){
+			if (totalHomeCenter < 80000) {
+				totalHomeCenter = totalHomeCenter+50000;
+			}
+			else if (totalHomeCenter <300000){
+				totalHomeCenter =totalHomeCenter+0;
+			}
+			else if (totalHomeCenter>300000){
+				totalHomeCenter = totalHomeCenter+0;
+			}	
+		}
+		else if (location==2){
+			if (totalHomeCenter < 80000) {
+				totalHomeCenter = totalHomeCenter+120000;
+			}
+			else if (totalHomeCenter <300000){
+				totalHomeCenter =totalHomeCenter+55000;
+			}
+			else if (totalHomeCenter>300000){
+				totalHomeCenter = totalHomeCenter+0;
+			}	
+		}
+		totalHomeCenter=totalHomeCenter+Roughconstruction+Whitework+Paint;
+		return totalHomeCenter;
 	}
- 	public static void getInput(){	
-		Scanner sc = new Scanner (System.in);
-
-		System.out.println("Hoy resolveremos el problema de mi tio");
+		/**Price including labor for Ferreteria del barrio<br>
+	*<b> pre Should be different "" only positive numbers and all must be initialized </b><br>
+	*<b> post returns what i would pay in Ferreteria del barrio </b><br>
+	*@param amount Should be an integer positive
+	*@param PriceFB Should be an integer positive
+	*@param numMaterials should be and integer positive
+	*@param location only u can write 0, 1 or 2
+	*/	
+	public static int getTotalFerreteriaBarrio(int[] amount,int[] PriceFB, int numMaterials,int location) {
+		int totalFerreteriaBarrio=0;
+			for(int i=0; i<numMaterials; i++){
+			totalFerreteriaBarrio += amount[i]*PriceFB[i];
+			}
+			if (location==1){
+				if (totalFerreteriaBarrio < 80000) {
+					totalFerreteriaBarrio = totalFerreteriaBarrio+120000;
+				}
+				else if (totalFerreteriaBarrio <300000){
+					totalFerreteriaBarrio =totalFerreteriaBarrio+50000;
+				}
+				else if (totalFerreteriaBarrio>300000){
+					totalFerreteriaBarrio = totalFerreteriaBarrio+0;
+				}
+			}
+			else if (location==1){
+				if (totalFerreteriaBarrio < 80000) {
+					totalFerreteriaBarrio = totalFerreteriaBarrio+50000;
+				}
+				else if (totalFerreteriaBarrio <300000){
+					totalFerreteriaBarrio =totalFerreteriaBarrio+0;
+				}
+				else if (totalFerreteriaBarrio>300000){
+					totalFerreteriaBarrio = totalFerreteriaBarrio+0;
+				}	
+			}
+			if (location==2){
+				if (totalFerreteriaBarrio < 80000) {
+					totalFerreteriaBarrio = totalFerreteriaBarrio+120000;
+				}
+				else if (totalFerreteriaBarrio <300000){
+					totalFerreteriaBarrio =totalFerreteriaBarrio+55000;
+				}
+				else if (totalFerreteriaBarrio>300000){
+					totalFerreteriaBarrio = totalFerreteriaBarrio+0;
+				}	
+			}	
+			totalFerreteriaBarrio=totalFerreteriaBarrio+Roughconstruction+Whitework+Paint;
+			return totalFerreteriaBarrio;
+		}
+	
+/**Price including labor for Ferreteria del centro<br>
+	*<b> pre Should be different "" and only numbers positives and all must be initialized </b><br>
+	*<b> post returns what i would pay in Ferreteria del centro </b><br>
+	*@param amount Should be an integer positive
+	*@param PriceFC Should be an integer positive
+	*@param numMaterials should be and integer positive
+	*@param location only u can write 0, 1 or 2
+	*/	
+	public static int getTotalFerreteriaCentro(int[] amount,int[] PriceFC, int numMaterials,int location) {
+		int totalFerreteriaCentro=0;
+			for(int i=0; i<numMaterials; i++){
+			totalFerreteriaCentro += amount[i]*PriceFC[i];
+			}
+			if (location==0){
+				if (totalFerreteriaCentro < 80000) {
+					totalFerreteriaCentro = totalFerreteriaCentro+120000;
+				}
+				else if (totalFerreteriaCentro <300000){
+					totalFerreteriaCentro =totalFerreteriaCentro+50000;
+				}
+				else if (totalFerreteriaCentro>300000){
+					totalFerreteriaCentro = totalFerreteriaCentro+0;
+				}	
+			}
+			else if (location==1){
+				if (totalFerreteriaCentro < 80000) {
+					totalFerreteriaCentro = totalFerreteriaCentro+50000;
+				}
+				else if (totalFerreteriaCentro <300000){
+					totalFerreteriaCentro =totalFerreteriaCentro+0;
+				}
+				else if (totalFerreteriaCentro>300000){
+					totalFerreteriaCentro = totalFerreteriaCentro+0;
+				}	
+			}
 		
-		int newProduct = 1;  //Nuevo producto
-		String nameproduct = "";
-		int amount = 0;
-		int utility = 0;
-		
-		double price = 0;
-		double price2 = 0;
-		double price3 = 0;
-		int i = 0;
-		while(i < 70) {
-			
-			if (newProduct == 0) {
-				addProduct(i, "", -1, -1, 0, 0, 0);
-				break;
-			} 
-			
-			System.out.println("Ingrese Nombre de Producto");
-			nameproduct = sc.nextLine(); //Nombre del producto
-			System.out.println("Por favor, ingrese el la cantidad del material anterior");
-			amount = sc.nextInt();  //Cantidad solicitada
-			System.out.println("Por favor, ingrese la utilizacion 0 Si sera usado para obra negra - 1 obra blanca -  2 pintura)");
-			utility = sc.nextInt(); //Utilizacion
-			
-			System.out.println("Por favor, ingrese el valor por unidad del producto de HomeCenter");
-			price = sc.nextDouble(); 
-			
-			System.out.println("Por favor, ingrese el valor por unidad del producto de Ferreteria del Barrio");
-			price2 = sc.nextDouble(); 
-
-			System.out.println("Por favor, ingrese el valor por unidad del producto de Ferreteria del centro");
-			price3 = sc.nextDouble(); 
-
-			addProduct(i, nameproduct, amount, utility, price, price2, price3);
-
-			System.out.println("Desea agregar un nuevo producto 1 Si  - 0 No");
-			newProduct = sc.nextInt(); 
-			sc.nextLine();	
-			
-			i++;
-		}		
+			else if (location==2){
+				if (totalFerreteriaCentro < 80000) {
+					totalFerreteriaCentro = totalFerreteriaCentro+120000;
+				}
+				else if (totalFerreteriaCentro <300000){
+					totalFerreteriaCentro =totalFerreteriaCentro+55000;
+				}
+				else if (totalFerreteriaCentro>300000){
+					totalFerreteriaCentro = totalFerreteriaCentro+0;
+				}	
+			}
+			totalFerreteriaCentro=totalFerreteriaCentro+Roughconstruction+Whitework+Paint;
+			return totalFerreteriaCentro;
+	}
+/** Recommendation of where to buy a product <br>
+	*<b> pre Should be different "" , only numbers positives and all must be initialized </b><br>
+	*<b> post what is the best price in one of the 3 hardware stores </b><br>
+	*@param numMaterials should be and integer positive
+	*@param PriceHC Should be an integer positive
+	*@param PriceFC Should be an integer positive
+	*@param PriceFB Should be an integer positive
+	*@param amount Should be an integer positive
+	*/	
+	public static int[] recomendationPrice(int numMaterials,int[] PriceFB, int[] PriceFC,int[] PriceHC,int[] amount) {
+		int[] Price = new int[numMaterials];
+		for (int i=0; i<numMaterials; i++){
+			if (PriceFB[i]*amount[i]<PriceHC[i]*amount[i]){
+				if (PriceFB[i]<PriceFC[i]){
+					Price[i] = PriceFB[i]*amount[i];
+				}
+				else {
+					Price[i]=PriceFC[i]*amount[i];
+				}
+			}
+			else if (PriceHC[i]<PriceFC[i]){
+				Price[i] = PriceHC[i]*amount[i];
+			}
+			else {
+				Price[i] = PriceFC[i]*amount[i];
+			}
+		}
+	return Price;		
+	}
+	/** Recommendation of where to buy a product <br>
+	*<b> pre Should be different "" ,only numbers positives and all must be initialized </b><br>
+	*<b> post what is the best price in one of the 3 hardware stores </b><br>
+	*@param numMaterials should be and integer positive
+	*@param PriceHC Should be an integer positive
+	*@param PriceFC Should be an integer positive
+	*@param PriceFB Should be an integer positive
+	*/	
+	public static String[] recomendationPlace(int numMaterials,int[] PriceFB, int[] PriceFC,int[] PriceHC){
+	String[] Place = new String[numMaterials];
+		for (int i=0; i<numMaterials; i++){
+			if (PriceFB[i]<PriceHC[i]){
+				if (PriceFB[i]<PriceFC[i]){
+					Place[i] = "Ferreteria del Barrio";
+				}
+				else {
+					Place[i]= "Ferreteria del centro";
+				}
+			}
+			else if (PriceHC[i]<PriceFC[i]){
+				Place[i] = "HomeCenter";
+			}
+			else {
+				Place[i] = "Ferreteria del centro";
+			}
+		}
+		return Place;
 	}	
-	public static int[] getSubtotal() {
-		
-		for(int i = 0; i < 70; i++) {
-			if (orderamount[i] != -1) {
-				subtotals[0] = subtotals[0]  + ( orderamount[i] * orderprice[i][0] );
-				subtotals[1] = subtotals[1]  + ( orderamount[i] * orderprice[i][1] );
-				subtotals[2] = subtotals[2]  + ( orderamount[i] * orderprice[i][2] );
-			}
+/** Total with shipping and workforce <br>
+	*<b> pre Should be different "" only numbers positives and all must be initialized </b><br>
+	*<b> post Total </b><br>
+	*@param numMaterials should be and integer positive
+	*@param Price Should be an integer positive
+	*@param location only u can write 0, 1 or 2
+	*@param amount Should be an integer positive
+	*/		
+	public static int printsTotal (int[] Price, int numMaterials, int[] amount, int location){
+		int Total = 0;
+		for(int i =0; i<numMaterials; i++){
+			Total += Price[i]*amount[i];
 		}
-		/*System.out.println("Subtotal si realiza su compra en HomeCenter: " + subtotals[0]);
-		System.out.println("Subtotal si realiza su compra en la Ferreteria del Barrio: " + subtotals[1]);
-		System.out.println("Subtotal si realiza su compra en la Ferretaria del centro: " + subtotals[2]);*/
-		return subtotals;
-	}
-	
-	public static void printTotals() {
-		
-		
-		System.out.println("Total si realiza su compra en HomeCenter con mano de obra y envio incluido es : " + (subtotals[0] > 0 ? (subtotals[0] + ShippingValue[0]+4880000 ) : 0 ) );
-		System.out.println("Total si realiza su compra en la Ferreteria del Barrio con mano de obra y envio incluido es : " + (subtotals[1] > 0 ? (subtotals[1] + ShippingValue[1]+4880000 ) : 0 ) );
-		System.out.println("Total si realiza su compra en la Ferretaria del centro con mano de obra y envio incluido es : " + (subtotals[2] > 0 ? (subtotals[2] + ShippingValue[2]+4880000 ) : 0 ) );
-
-	}
-	public static void recomendationProducts() {
-		
-		for(int i = 0; i < 70; i++) {
-			if (orderamount[i] != -1) {
-				if (orderprice[i][0] < orderprice[i][1] && orderprice[i][0] < orderprice[i][2] ) {
-					System.out.println("El producto: " + orderproduct[i] + " es mejor en HomeCenter con el precio sin envio: " + orderprice[i][0]);
-				}
-				if (orderprice[i][1] < orderprice[i][0] && orderprice[i][1] < orderprice[i][2] ) {
-					System.out.println("El producto: " + orderproduct[i] + " es mejor en la Ferreteria del Barrio con el precio sin envio: " + orderprice[i][1]);
-				}
-				if (orderprice[i][2] < orderprice[i][0] && orderprice[i][2] < orderprice[i][1] ) {
-					System.out.println("El producto: " + orderproduct[i] + " es mejor en la Ferreteria del centro con el precio sin envio : " + orderprice[i][2]);
-				}
+		if (location==0){
+			if (Total < 80000) {
+				Total = Total+120000;
 			}
+			else if (Total <300000){
+				Total =Total+50000;
+			}
+			else if (Total>300000){
+				Total = Total+0;
+			}	
 		}
-	}
-
-	public static void desplegarProductos() {
-		Scanner sc = new Scanner (System.in);
-		int utility = 0;
-		System.out.println("desplegar productos por utilizacion: 0 Si sera usado para obra negra - 1 obra blanca - 2 pintura");
-		utility = sc.nextInt(); //Utilizacion
-		for(int i = 0; i < 70; i++) {
-			if (orderamount[i] != -1) {
-				if (orderutilization[i] == utility) {
-					System.out.println("La lista por utilizacion es : " + orderproduct[i] );
-				}
-			} else {
-				break;
+		else if (location==1){
+			if (Total < 80000) {
+				Total = Total+50000;
 			}
+			else if (Total <300000){
+				Total =Total+0;
+			}
+			else if (Total>300000){
+				Total = Total+0;
+			}	
 		}
-	}
-	
-	
-	public static void getEnvios() {
-		int location = 0;
-		Scanner sc = new Scanner (System.in);
-		System.out.println("Seleccionar Ubicacion de su residencia: 0 Norte - 1 Centro - 2 Sur");
-		location = sc.nextInt();
+		else if (location==2){
+			if (Total < 80000) {
+				Total = Total+120000;
+			}
+			else if (Total <300000){
+				Total =Total+55000;
+			}
+			else if (Total>300000){
+				Total = Total+0;
+			}	
+		}
 		
-		for(int i = 0; i < 3; i++) {
-			
-			if (location == 0) {
-				if (subtotals[i] < 80000) {
-					ShippingValue[i] = 120000;
-				}
-				else if (subtotals[i] <300000){
-					ShippingValue[i] = 28000;
-				}
-				else if (subtotals[i]>300000){
-					ShippingValue[i] = 0;
-				}
-			}
-			if (location == 1) {
-				if (subtotals[i] < 80000) {
-					ShippingValue[i] = 50000;
-				}
-				else if (subtotals[i]<300000){
-					ShippingValue[i] = 0;
-				}
-				else if (subtotals[i]>300000){
-					ShippingValue[i] = 0;
-				}
-			}
-			if (location == 2) {
-				if (subtotals[i] < 80000) {
-					ShippingValue[i] = 120000;
-				}
-				else if (subtotals[i]<300000){
-					ShippingValue[i] = 55000;
-				}
-				else if (subtotals[i]>300000){
-					ShippingValue[i] = 0;
-				}
-			}
-		}
-	}	
-
-
-	public static void main (String[]args){
-	
-	getInput();
-	getSubtotal();
-	getEnvios();
-	printTotals();
-	recomendationProducts();
-	desplegarProductos();
+	Total=Total+Roughconstruction+Whitework+Paint;
+	return Total;	
 	}
-
-
-
-
-
-
-
-
-
-
-
+	/** display by list of use <br>
+	*<b> pre Should be different "" and only numbers positives and all must be initialized </b><br>
+	*<b> post returns the utilization  </b><br>
+	*@param nameproduct different "" and only letters
+	*@param utility Should be an integer positive
+	*@param numMaterials should be and integer positive
+	*/	
+	public static String[] Workforce (int numMaterials, String[] nameproduct,int[] utility){
+		String[] SaveroughConstruction = new String[numMaterials];
+		for( int i =0; i<numMaterials; i++){
+			if (utility[i]==0){
+				SaveroughConstruction[i]=nameproduct[i];
+			}	
+		}
+		return SaveroughConstruction;
+	}
+	/** display by list of use <br>
+	*<b> pre Should be different "" and only numbers positives and all must be initialized </b><br>
+	*<b> post returns the utilization  </b><br>
+	*@param nameproduct different "" and only letters
+	*@param utility Should be an integer positive
+	*@param numMaterials should be and integer positive
+	*/	
+	public static String[] Workforcetwo (int numMaterials, String[] nameproduct,int[] utility){
+		String[] Savewhitework = new String[numMaterials];
+		for( int i =0; i<numMaterials; i++){
+			if (utility[i]==1){
+				Savewhitework[i]=nameproduct[i];
+			}	
+		}
+		return Savewhitework;
+	}
+	/** display by list of use <br>
+	*<b> pre Should be different "" and only numbers positives and all must be initialized </b><br>
+	*<b> post returns the utilization  </b><br>
+	*@param nameproduct different "" and only letters
+	*@param utility Should be an integer positive
+	*@param numMaterials should be and integer positive
+	*/	
+	public static String[] Workforcethree (int numMaterials, String[] nameproduct,int[] utility){
+		String[] Savepaint = new String[numMaterials];
+		for( int i =0; i<numMaterials; i++){
+			if (utility[i]==2){
+				Savepaint[i]=nameproduct[i];
+			}	
+		}
+		return Savepaint;
+	}
 }	
+			
+			
+			
+			
+			
+			
+			
+	
+		
+		
+		
+		
+		
+		
